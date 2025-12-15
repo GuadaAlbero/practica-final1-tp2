@@ -1,12 +1,18 @@
 import { Router } from "express";
 import controller from "../container/container.js";
+import validateRunnerId from "../middlewares/validateRunnerId.js";
+import validateNumbers from "../middlewares/validateNumbers.js";
 
 const router = Router();
 
 router.get("/", controller.getAll);
-router.get("/:id", controller.getById);
-router.post("/", controller.create);
-router.put("/:id", controller.update);
-router.delete("/:id", controller.delete);
+//REVISAR
+router.post(
+  "/",
+  validateRunnerId,
+  validateNumbers(["latitud", "longitud"]),
+  controller.create
+);
 
 export default router;
+

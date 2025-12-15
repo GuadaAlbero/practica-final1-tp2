@@ -5,30 +5,19 @@ class Dao {
     return this.data;
   };
 
-  getById = async (id) => {
-    return this.data.find(item => item.id === id);
-  };
+//ESTA OK?
+  createOrUpdate = async (corredor) => {
+    const index = this.data.findIndex(c => c.id === corredor.id);
 
-  create = async (data) => {
-    this.data.push(data);
-    return data;
-  };
+    if (index === -1) {
+      this.data.push(corredor);
+      return corredor;
+    }
 
-  update = async (id, newData) => {
-    const index = this.data.findIndex(item => item.id === id);
-    if (index === -1) throw new Error("ID not found");
-
-    this.data[index] = { ...this.data[index], ...newData };
-    return this.data[index];
-  };
-
-  delete = async (id) => {
-    const index = this.data.findIndex(item => item.id === id);
-    if (index === -1) throw new Error("ID not found");
-
-    this.data.splice(index, 1);
-    return true;
+    this.data[index] = corredor;
+    return corredor;
   };
 }
 
 export default Dao;
+
